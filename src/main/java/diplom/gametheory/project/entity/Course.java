@@ -3,6 +3,7 @@ package diplom.gametheory.project.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,7 +18,15 @@ public class Course {
     private String book;
     private String link;
 
-    @OneToMany(mappedBy = "course")
-    private List<Exam> exams;
+    @OneToMany(mappedBy = "course",cascade = CascadeType.ALL)
+    private List<Quiz> quizzes;
+
+    public void addQuiz(Quiz quiz){
+        if(quizzes==null){
+            quizzes = new ArrayList<>();
+        }
+        quizzes.add(quiz);
+        quiz.setCourse(this);
+    }
 
 }
